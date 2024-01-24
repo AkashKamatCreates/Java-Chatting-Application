@@ -11,7 +11,7 @@ public class server extends JFrame implements ActionListener {
 
     server(){
 
-        f.setLayout(null);
+        setLayout(null);
         setTitle("Java Chatting Application - Akash Kamat");
 //        setIconImage(getIconImage(icons/jlogo.webp));
 
@@ -47,8 +47,8 @@ public class server extends JFrame implements ActionListener {
 
         //jframe for main text area.
         JPanel a1 = new JPanel();
-        a1.setBounds(0, 0, 600, 340);
-        a1.setBackground(Color.GRAY);
+        a1.setBounds(0, 0, 600, 400);
+        a1.setBackground(new Color(57, 62, 70));
 //        a1.setLayout(new FlowLayout()); // Set a layout manager
         add(a1);
 
@@ -59,10 +59,25 @@ public class server extends JFrame implements ActionListener {
 //        add(text);
         JTextField text = new JTextField();
 //        text.setBounds(300, 300, 310, 40);
-        text.setBounds(5, 500, 100, 30); // Adjusted bounds for one line of text
-        text.setBackground(Color.magenta); // Set the background color of the text field
-        text.setFont(new Font("Segoe UI", Font.BOLD, 16));
+        text.setBounds(0, 340, 500, 60); // Adjusted bounds for one line of text
+        text.setBackground(new Color(45, 50, 80)); // Set the background color of the text field
+        text.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        text.setForeground(Color.WHITE);
+//        text.setMargin(new Insets(0, 70, 0, 0));
+        text.setBorder(null);
+//        text.setMargin(new Insets(0, 10, 0, 0));
         add(text);
+
+
+
+
+        JButton send = new JButton("SEND");
+        send.setBounds(500, 340, 100, 60);
+        send.setBackground(new Color(34, 40, 49));
+        send.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        send.setForeground(Color.white);
+        send.setBorder(null);
+        add(send);
 
 
 
