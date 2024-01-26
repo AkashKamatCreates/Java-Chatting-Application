@@ -1,9 +1,13 @@
 package org.akashkamatproject;
 
 import javax.swing.*;
+import javax.swing.border.* ;
+import javax.swing.text.html.HTML;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 public class server extends JFrame implements ActionListener {
 
@@ -51,12 +55,7 @@ public class server extends JFrame implements ActionListener {
         p1.add(name);
 
 
-        //jframe for main text area.
-        a1 = new JPanel();
-        a1.setBounds(0, 60, 600, 400);
-        a1.setBackground(new Color(57, 62, 70));
-//        a1.setLayout(new FlowLayout()); // Set a layout manager
-        add(a1);
+
 
 //        JTextField text = new JTextField();
 //        text.setBounds(300, 300, 310, 40);
@@ -87,6 +86,12 @@ public class server extends JFrame implements ActionListener {
         add(send);
 
 
+        //jframe for main text area.
+        a1 = new JPanel();
+        a1.setBounds(0, 60, 600, 400);
+        a1.setBackground(new Color(57, 62, 70));
+//        a1.setLayout(new FlowLayout()); // Set a layout manager
+        add(a1);
 
 
 /** WARNING: the below code should be untouched since it has main configuration!!! */
@@ -101,22 +106,58 @@ public class server extends JFrame implements ActionListener {
 
     public void actionPerformed(ActionEvent ae){
         String out = text.getText();
-        JLabel output = new JLabel(out);
-        JPanel p2 = new JPanel();
-        p2.add(output);
+//        JLabel output = new JLabel(out);
+        JPanel p2 = formatLabel(out);
+//        p2.add(output);
         a1.setLayout(new BorderLayout());
         JPanel right = new JPanel(new BorderLayout());
         right.add(p2, BorderLayout.LINE_END);
+        right.setBackground(new Color(57, 62, 70));
+
         vertical.add(right);
         vertical.add(Box.createVerticalStrut(15));
         a1.add(vertical, BorderLayout.PAGE_START);
+
+
+        text.setText("");
+
 
         repaint();
         invalidate();
         validate();
     }
 
+    public static JPanel formatLabel(String out){
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.Y_AXIS));
 
+        JLabel output = new JLabel("<html><p style =\"width:175px\" >"+out+"</p></html>");
+        output.setFont(new Font("Tamoha", Font.BOLD, 20));
+        //ORIGINAL COLOR: MAGENTA/DARK PINK
+        output.setBackground(new Color(138, 47, 141, 255));
+//        output.setBackground(new Color(57, 62, 70));
+
+
+        output.setForeground(Color.WHITE); // Replace Color.RED with the color you desire
+
+        output.setOpaque(true);
+        output.setBorder(new EmptyBorder(10, 10, 10, 25));
+//        panel.setBackground(Color.CYAN);
+        panel.add(output);
+
+
+        Calendar cal = Calendar.getInstance();
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm");
+        JLabel time = new JLabel();
+        time.setText(sdf.format(cal.getTime()));
+        panel.add(time);
+        panel.setBackground(new Color(57, 62, 70));
+        time.setForeground(Color.white);
+        time.setBorder(new EmptyBorder(0, 10, 0, 0));
+
+
+        return panel;
+    }
 
     public static void main(String[] args) {
         new server();
