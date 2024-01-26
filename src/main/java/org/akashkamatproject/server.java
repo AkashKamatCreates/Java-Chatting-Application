@@ -9,6 +9,12 @@ public class server extends JFrame implements ActionListener {
 
     static JFrame f = new JFrame();
 
+    JTextField text;
+    JPanel a1;
+    Box vertical = Box.createVerticalBox();
+
+
+
     server(){
 
         setLayout(null);
@@ -46,8 +52,8 @@ public class server extends JFrame implements ActionListener {
 
 
         //jframe for main text area.
-        JPanel a1 = new JPanel();
-        a1.setBounds(0, 0, 600, 400);
+        a1 = new JPanel();
+        a1.setBounds(0, 60, 600, 400);
         a1.setBackground(new Color(57, 62, 70));
 //        a1.setLayout(new FlowLayout()); // Set a layout manager
         add(a1);
@@ -57,7 +63,7 @@ public class server extends JFrame implements ActionListener {
 //        setBackground(Color.magenta);
 //        text.setFont(new Font("Segoe UI", Font.BOLD, 16));
 //        add(text);
-        JTextField text = new JTextField();
+        text = new JTextField();
 //        text.setBounds(300, 300, 310, 40);
         text.setBounds(0, 340, 500, 60); // Adjusted bounds for one line of text
         text.setBackground(new Color(45, 50, 80)); // Set the background color of the text field
@@ -77,6 +83,7 @@ public class server extends JFrame implements ActionListener {
         send.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         send.setForeground(Color.white);
         send.setBorder(null);
+        send.addActionListener(this);
         add(send);
 
 
@@ -92,7 +99,24 @@ public class server extends JFrame implements ActionListener {
     }
 
 
-    public void actionPerformed(ActionEvent ae){}
+    public void actionPerformed(ActionEvent ae){
+        String out = text.getText();
+        JLabel output = new JLabel(out);
+        JPanel p2 = new JPanel();
+        p2.add(output);
+        a1.setLayout(new BorderLayout());
+        JPanel right = new JPanel(new BorderLayout());
+        right.add(p2, BorderLayout.LINE_END);
+        vertical.add(right);
+        vertical.add(Box.createVerticalStrut(15));
+        a1.add(vertical, BorderLayout.PAGE_START);
+
+        repaint();
+        invalidate();
+        validate();
+    }
+
+
 
     public static void main(String[] args) {
         new server();
