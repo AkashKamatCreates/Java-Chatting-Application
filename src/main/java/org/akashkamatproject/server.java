@@ -65,7 +65,7 @@ public class server extends JFrame implements ActionListener {
 //        add(text);
         text = new JTextField();
 //        text.setBounds(300, 300, 310, 40);
-        text.setBounds(0, 340, 500, 60); // Adjusted bounds for one line of text
+        text.setBounds(0, 740, 500, 60); // Adjusted bounds for one line of text
         text.setBackground(new Color(45, 50, 80)); // Set the background color of the text field
         text.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         text.setForeground(Color.WHITE);
@@ -78,7 +78,7 @@ public class server extends JFrame implements ActionListener {
 
 
         JButton send = new JButton("SEND");
-        send.setBounds(500, 340, 100, 60);
+        send.setBounds(500, 740, 100, 60);
         send.setBackground(new Color(34, 40, 49));
         send.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         send.setForeground(Color.white);
@@ -89,14 +89,14 @@ public class server extends JFrame implements ActionListener {
 
         //jframe for main text area.
         a1 = new JPanel();
-        a1.setBounds(0, 60, 600, 400);
+        a1.setBounds(0, 60, 600, 800);
         a1.setBackground(new Color(57, 62, 70));
 //        a1.setLayout(new FlowLayout()); // Set a layout manager
         add(a1);
 
 
 /** WARNING: the below code should be untouched since it has main configuration!!! */
-        setSize(600, 400);
+        setSize(600, 800);
         setLocation(200, 50);
         getContentPane().setBackground(new Color(57, 62, 70));
 
