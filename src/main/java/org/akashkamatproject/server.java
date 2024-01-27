@@ -187,6 +187,8 @@ public class server implements ActionListener {
 
                     JPanel left = new JPanel(new BorderLayout());
                     left.add(panel, BorderLayout.LINE_START);
+                    left.setBackground(new Color(57, 62, 70));
+
                     vertical.add(left);
                     f.validate();
                 }
