@@ -121,6 +121,7 @@ public class server implements ActionListener {
 
             JPanel right = new JPanel(new BorderLayout());
             right.add(p2, BorderLayout.LINE_END);
+            right.setBackground(new Color(57, 62, 70));
             vertical.add(right);
             vertical.add(Box.createVerticalStrut(15));
 
@@ -162,7 +163,7 @@ public class server implements ActionListener {
         JLabel time = new JLabel();
         time.setText(sdf.format(cal.getTime()));
         panel.add(time);
-        panel.setBackground(new Color(57, 62, 70));
+        panel.setBackground(new Color(57, 62, 70)); //timing background
         time.setForeground(Color.white);
         time.setBorder(new EmptyBorder(0, 10, 0, 0));
 

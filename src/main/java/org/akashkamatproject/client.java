@@ -120,6 +120,7 @@ public class client extends JFrame implements ActionListener {
 
             JPanel right = new JPanel(new BorderLayout());
             right.add(p2, BorderLayout.LINE_END);
+            right.setBackground(new Color(57, 62, 70));
             vertical.add(right);
             vertical.add(Box.createVerticalStrut(15));
 
