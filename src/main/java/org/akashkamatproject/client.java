@@ -6,22 +6,27 @@ import javax.swing.text.html.HTML;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
 public class client extends JFrame implements ActionListener {
 
+    JTextField text;
+    static JPanel a1;
+    static Box vertical = Box.createVerticalBox();
+
     static JFrame f = new JFrame();
 
-    JTextField text;
-    JPanel a1;
-    Box vertical = Box.createVerticalBox();
+    static DataOutputStream dout;
 
 
 
     client(){
 
-        setLayout(null);
+        f.setLayout(null);
         setTitle("Java Chatting Application - Akash Kamat");
 //        setIconImage(getIconImage(icons/jlogo.webp));
 
@@ -29,7 +34,7 @@ public class client extends JFrame implements ActionListener {
         p1.setBackground(new Color(34, 40, 49));
         p1.setBounds(0, 0, 600, 60);
         p1.setLayout(null);
-        add(p1);
+        f.add(p1);
 
 
 
@@ -72,7 +77,7 @@ public class client extends JFrame implements ActionListener {
 //        text.setMargin(new Insets(0, 70, 0, 0));
         text.setBorder(null);
 //        text.setMargin(new Insets(0, 10, 0, 0));
-        add(text);
+        f.add(text);
 
 
 
@@ -84,7 +89,7 @@ public class client extends JFrame implements ActionListener {
         send.setForeground(Color.white);
         send.setBorder(null);
         send.addActionListener(this);
-        add(send);
+        f.add(send);
 
 
         //jframe for main text area.
@@ -92,40 +97,44 @@ public class client extends JFrame implements ActionListener {
         a1.setBounds(0, 60, 600, 800);
         a1.setBackground(new Color(57, 62, 70));
 //        a1.setLayout(new FlowLayout()); // Set a layout manager
-        add(a1);
+        f.add(a1);
 
 
 /** WARNING: the below code should be untouched since it has main configuration!!! */
-        setSize(600, 800);
-        setLocation(820, 50);
-        getContentPane().setBackground(new Color(57, 62, 70));
+        f.setSize(600, 800);
+        f.setLocation(820, 50);
+        f.getContentPane().setBackground(new Color(57, 62, 70));
 
-        setVisible(true);
+        f.setVisible(true);
 
     }
 
 
-    public void actionPerformed(ActionEvent ae){
-        String out = text.getText();
-//        JLabel output = new JLabel(out);
-        JPanel p2 = formatLabel(out);
-//        p2.add(output);
-        a1.setLayout(new BorderLayout());
-        JPanel right = new JPanel(new BorderLayout());
-        right.add(p2, BorderLayout.LINE_END);
-        right.setBackground(new Color(57, 62, 70));
+    public void actionPerformed(ActionEvent ae) {
+        try {
+            String out = text.getText();
 
-        vertical.add(right);
-        vertical.add(Box.createVerticalStrut(15));
-        a1.add(vertical, BorderLayout.PAGE_START);
+            JPanel p2 = formatLabel(out);
 
+            a1.setLayout(new BorderLayout());
 
-        text.setText("");
+            JPanel right = new JPanel(new BorderLayout());
+            right.add(p2, BorderLayout.LINE_END);
+            vertical.add(right);
+            vertical.add(Box.createVerticalStrut(15));
 
+            a1.add(vertical, BorderLayout.PAGE_START);
 
-        repaint();
-        invalidate();
-        validate();
+            dout.writeUTF(out);
+
+            text.setText("");
+
+            f.repaint();
+            f.invalidate();
+            f.validate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static JPanel formatLabel(String out){
@@ -162,5 +171,28 @@ public class client extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         new client();
+
+        try {
+            Socket s = new Socket("127.0.0.1", 6001);
+            DataInputStream din = new DataInputStream(s.getInputStream());
+            dout = new DataOutputStream(s.getOutputStream());
+
+            while(true) {
+                a1.setLayout(new BorderLayout());
+                String msg = din.readUTF();
+                JPanel panel = formatLabel(msg);
+
+                JPanel left = new JPanel(new BorderLayout());
+                left.add(panel, BorderLayout.LINE_START);
+                vertical.add(left);
+
+                vertical.add(Box.createVerticalStrut(15));
+                a1.add(vertical, BorderLayout.PAGE_START);
+
+                f.validate();
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

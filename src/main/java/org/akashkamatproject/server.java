@@ -6,30 +6,36 @@ import javax.swing.text.html.HTML;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.DataInput;
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.net.*;
 
-public class server extends JFrame implements ActionListener {
+
+public class server implements ActionListener {
 
     static JFrame f = new JFrame();
 
     JTextField text;
     JPanel a1;
-    Box vertical = Box.createVerticalBox();
+    static Box vertical = Box.createVerticalBox();
+    static DataOutputStream dout;
 
 
 
     server(){
 
-        setLayout(null);
-        setTitle("Java Chatting Application - Akash Kamat");
+        f.setLayout(null);
+        f.setTitle("Java Chatting Application - Akash Kamat");
 //        setIconImage(getIconImage(icons/jlogo.webp));
 
         JPanel p1 = new JPanel();
         p1.setBackground(new Color(34, 40, 49));
         p1.setBounds(0, 0, 600, 60);
         p1.setLayout(null);
-        add(p1);
+        f.add(p1);
 
 
 
@@ -72,7 +78,7 @@ public class server extends JFrame implements ActionListener {
 //        text.setMargin(new Insets(0, 70, 0, 0));
         text.setBorder(null);
 //        text.setMargin(new Insets(0, 10, 0, 0));
-        add(text);
+        f.add(text);
 
 
 
@@ -84,7 +90,7 @@ public class server extends JFrame implements ActionListener {
         send.setForeground(Color.white);
         send.setBorder(null);
         send.addActionListener(this);
-        add(send);
+        f.add(send);
 
 
         //jframe for main text area.
@@ -92,40 +98,44 @@ public class server extends JFrame implements ActionListener {
         a1.setBounds(0, 60, 600, 800);
         a1.setBackground(new Color(57, 62, 70));
 //        a1.setLayout(new FlowLayout()); // Set a layout manager
-        add(a1);
+        f.add(a1);
 
 
 /** WARNING: the below code should be untouched since it has main configuration!!! */
-        setSize(600, 800);
-        setLocation(200, 50);
-        getContentPane().setBackground(new Color(57, 62, 70));
+        f.setSize(600, 800);
+        f.setLocation(200, 50);
+        f.getContentPane().setBackground(new Color(57, 62, 70));
 
-        setVisible(true);
+        f.setVisible(true);
 
     }
 
 
-    public void actionPerformed(ActionEvent ae){
-        String out = text.getText();
-//        JLabel output = new JLabel(out);
-        JPanel p2 = formatLabel(out);
-//        p2.add(output);
-        a1.setLayout(new BorderLayout());
-        JPanel right = new JPanel(new BorderLayout());
-        right.add(p2, BorderLayout.LINE_END);
-        right.setBackground(new Color(57, 62, 70));
+    public void actionPerformed(ActionEvent ae) {
+        try {
+            String out = text.getText();
 
-        vertical.add(right);
-        vertical.add(Box.createVerticalStrut(15));
-        a1.add(vertical, BorderLayout.PAGE_START);
+            JPanel p2 = formatLabel(out);
 
+            a1.setLayout(new BorderLayout());
 
-        text.setText("");
+            JPanel right = new JPanel(new BorderLayout());
+            right.add(p2, BorderLayout.LINE_END);
+            vertical.add(right);
+            vertical.add(Box.createVerticalStrut(15));
 
+            a1.add(vertical, BorderLayout.PAGE_START);
 
-        repaint();
-        invalidate();
-        validate();
+            dout.writeUTF(out);
+
+            text.setText("");
+
+            f.repaint();
+            f.invalidate();
+            f.validate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     public static JPanel formatLabel(String out){
@@ -162,5 +172,26 @@ public class server extends JFrame implements ActionListener {
 
     public static void main(String[] args) {
         new server();
+
+        try{
+            ServerSocket skt = new ServerSocket(6001);
+            while (true) {
+                Socket s = skt.accept();
+                DataInputStream din = new DataInputStream(s.getInputStream());
+                dout = new DataOutputStream(s.getOutputStream());
+
+                while (true) {
+                    String msg = din.readUTF();
+                    JPanel panel = formatLabel(msg);
+
+                    JPanel left = new JPanel(new BorderLayout());
+                    left.add(panel, BorderLayout.LINE_START);
+                    vertical.add(left);
+                    f.validate();
+                }
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 }
