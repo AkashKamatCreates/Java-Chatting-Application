@@ -49,8 +49,6 @@ public class server implements ActionListener {
         p1.add(pic);
 
 
-
-
         JLabel name = new JLabel("Akash Kamat");
 //        int panelHeight = p1.getHeight();
 //        int labelHeight = name.getPreferredSize().height;
