@@ -69,8 +69,8 @@ public class server implements ActionListener {
 //        add(text);
         text = new JTextField();
 //        text.setBounds(300, 300, 310, 40);
-        text.setBounds(0, 740, 500, 60); // Adjusted bounds for one line of text
-        text.setBackground(new Color(45, 50, 80)); // Set the background color of the text field
+        text.setBounds(0, 740, 500, 60);
+        text.setBackground(new Color(45, 50, 80));
         text.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         text.setForeground(Color.WHITE);
 //        text.setMargin(new Insets(0, 70, 0, 0));
@@ -95,7 +95,7 @@ public class server implements ActionListener {
         a1 = new JPanel();
         a1.setBounds(0, 60, 600, 800);
         a1.setBackground(new Color(57, 62, 70));
-//        a1.setLayout(new FlowLayout()); // Set a layout manager
+//        a1.setLayout(new FlowLayout());
         f.add(a1);
 
 
@@ -148,7 +148,7 @@ public class server implements ActionListener {
 //        output.setBackground(new Color(57, 62, 70));
 
 
-        output.setForeground(Color.WHITE); // Replace Color.RED with the color you desire
+        output.setForeground(Color.WHITE);
 
         output.setOpaque(true);
         output.setBorder(new EmptyBorder(10, 10, 10, 25));

@@ -70,8 +70,8 @@ public class client extends JFrame implements ActionListener {
 //        add(text);
         text = new JTextField();
 //        text.setBounds(300, 300, 310, 40);
-        text.setBounds(0, 740, 500, 60); // Adjusted bounds for one line of text
-        text.setBackground(new Color(45, 50, 80)); // Set the background color of the text field
+        text.setBounds(0, 740, 500, 60);
+        text.setBackground(new Color(45, 50, 80));
         text.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         text.setForeground(Color.WHITE);
 //        text.setMargin(new Insets(0, 70, 0, 0));
@@ -149,7 +149,7 @@ public class client extends JFrame implements ActionListener {
 //        output.setBackground(new Color(57, 62, 70));
 
 
-        output.setForeground(Color.WHITE); // Replace Color.RED with the color you desire
+        output.setForeground(Color.WHITE);
 
         output.setOpaque(true);
         output.setBorder(new EmptyBorder(10, 10, 10, 25));
